@@ -13,7 +13,7 @@ const User = require('./models/userModel');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
-const cmsRouter = require('./routes/cmsRoutes');
+// const cmsRouter = require('./routes/cmsRoutes');
 const userRouter = require('./routes/userRoutes');
 const packageRouter = require('./routes/packageRoutes');
 const newsLetterRouter = require('./routes/newsLetterRoutes');
@@ -101,7 +101,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:3040/api/v1",
+        url: "http://localhost:3000/api/v1",
       },
       {
         url: "https://vibe-garden-backend.herokuapp.com/api/v1",
@@ -138,7 +138,7 @@ app.get('/', (req, res) => {
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/packages', packageRouter);
 app.use('/api/v1/newsLetter', newsLetterRouter);
-app.use('/api/v1/cms', cmsRouter);
+// app.use('/api/v1/cms', cmsRouter);
 app.use('/api/v1/notifications', NotificationsRouter);
 app.use('/api/v1/crud', crudRouter);
 app.use('/api/v1/privacyPolicy', privacyPolicyRouter);
