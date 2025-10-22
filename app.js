@@ -176,10 +176,7 @@ app.all('*', (req, res, next) => {
 app.use(globalErrorHandler);
 
 
-// exports.app = app;
-// exports.http = http;
+exports.app = app;
+exports.http = http;
 
 
-
-module.exports = app;
-module.exports = http;
