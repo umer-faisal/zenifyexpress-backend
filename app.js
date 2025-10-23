@@ -16,6 +16,10 @@ const User = require('./models/userModel');
 
 
 const userRouter = require('./routes/userRoutes');
+const categoryRouter = require('./routes/categoryRoutes');
+
+
+
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 
@@ -30,7 +34,6 @@ const globalErrorHandler = require('./controllers/errorController');
 // const termsAndConditionsRouter = require('./routes/termsAndConditionsRoutes');
 // const bloomOrCharacterRouter = require('./routes/bloomOrCharacterRoutes');
 // const videosRouter = require('./routes/videoRoutes');
-// const categoriesRouter = require('./routes/categoryRoutes');
 // const tagsRouter = require('./routes/tagRoutes');
 // const resonanceFinderRouter = require('./routes/resonanceFinderRoutes');
 // const resonanceFinderQuestionRouter = require('./routes/resonanceFinderQuestionRoutes');
@@ -159,6 +162,8 @@ app.get('/', (req, res) => {
 
 
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/categories', categoryRouter);
+
 
 
 // app.use('/api/v1/packages', packageRouter);
@@ -170,7 +175,6 @@ app.use('/api/v1/users', userRouter);
 // app.use('/api/v1/termsAndConditions', termsAndConditionsRouter);
 // app.use('/api/v1/bloom-or-character', bloomOrCharacterRouter);
 // app.use('/api/v1/videos', videosRouter);
-// app.use('/api/v1/categories', categoriesRouter);
 // app.use('/api/v1/tags', tagsRouter);
 // app.use('/api/v1/resonance-finder', resonanceFinderRouter);
 // app.use('/api/v1/resonance-finder-question', resonanceFinderQuestionRouter);

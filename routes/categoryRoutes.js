@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const categoryController = require('../controllers/categoryController');
-const { protect, restrictTo } = require('../middlewares/authMiddleware'); // We'll create this soon
+const { protect, restrictTo } = require('../controllers/authController'); 
 
 /* ==========================================================
    📦 CATEGORY ROUTES

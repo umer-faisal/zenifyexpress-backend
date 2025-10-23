@@ -114,7 +114,7 @@ exports.login = catchAsync(async (req, res, next) => {
 /* ==========================================================
    🔒 PROTECT MIDDLEWARE (Verify JWT)
    ========================================================== */
-   
+
 exports.protect = catchAsync(async (req, res, next) => {
   // 1️⃣ Get token and check if it exists
   let token;
@@ -158,8 +158,10 @@ exports.protect = catchAsync(async (req, res, next) => {
 /* ==========================================================
    ⚙️ ROLE-BASED ACCESS CONTROL
    ========================================================== */
+
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
+      console.log('req.user.role', req.user.role, { roles });
     // roles = ['admin', 'user']
     if (!roles.includes(req.user.role)) {
       return next(
@@ -169,3 +171,5 @@ exports.restrictTo = (...roles) => {
     next();
   };
 };
+
+
