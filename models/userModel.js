@@ -10,12 +10,14 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
     },
+
     email: {
       type: String,
       unique: true,
       lowercase: true,
       validate: [validator.isEmail, 'Please provide a valid email'],
     },
+
     password: {
       type: String,
       minlength: 8,
@@ -33,10 +35,12 @@ const userSchema = new mongoose.Schema(
         message: 'Passwords are not the same!',
       },
     },
+
     passwordResetCode: {
       type: Number,
       default: 0,
     },
+
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
@@ -46,10 +50,12 @@ const userSchema = new mongoose.Schema(
       enum: ["admin", "user"],
       default: "user",
     },
+
     cart: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Cart",
     },
+    
     wishlist: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -60,7 +66,7 @@ const userSchema = new mongoose.Schema(
   {
     timestamps: true,
   }
-)
+);
 
 
 

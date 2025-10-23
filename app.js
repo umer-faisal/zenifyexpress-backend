@@ -1,6 +1,7 @@
-const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
+
+const path = require('path');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
@@ -9,14 +10,18 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const cors = require('cors');
+
 const User = require('./models/userModel');
 
+
+
+const userRouter = require('./routes/userRoutes');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 
 
+
 // const cmsRouter = require('./routes/cmsRoutes');
-// // const userRouter = require('./routes/userRoutes');
 // const packageRouter = require('./routes/packageRoutes');
 // const newsLetterRouter = require('./routes/newsLetterRoutes');
 // const NotificationsRouter = require('./routes/notificationRoutes');
@@ -151,7 +156,11 @@ app.get('/', (req, res) => {
   });
 });
 
-// app.use('/api/v1/users', userRouter);
+
+
+app.use('/api/v1/users', userRouter);
+
+
 // app.use('/api/v1/packages', packageRouter);
 // app.use('/api/v1/newsLetter', newsLetterRouter);
 // app.use('/api/v1/cms', cmsRouter);
@@ -169,11 +178,16 @@ app.get('/', (req, res) => {
 // app.use('/api/v1/booking', bookingRouter);
 // app.use('/api/v1/contact-us', contactUsRouter);
 
+
+
+/* Optional: handle unhandled routes */
+
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
-app.use(globalErrorHandler);
+
+app.use(globalErrorHandler);  // error handler
 
 
 exports.app = app;
