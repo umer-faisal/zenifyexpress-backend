@@ -17,6 +17,8 @@ const User = require('./models/userModel');
 
 const userRouter = require('./routes/userRoutes');
 const categoryRouter = require('./routes/categoryRoutes');
+const subcategoryRouter = require('./routes/subcategoryRoutes');
+
 
 
 
@@ -163,6 +165,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/categories', categoryRouter);
+app.use('/api/v1/subcategories', subcategoryRouter);
 
 
 

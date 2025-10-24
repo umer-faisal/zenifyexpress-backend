@@ -35,7 +35,7 @@ exports.createCategory = catchAsync(async (req, res, next) => {
    🧠 GET ALL CATEGORIES (Public)
    ========================================================== */
 exports.getAllCategories = catchAsync(async (req, res, next) => {
-  const categories = await Category.find();
+  const categories = await Category.find({ isActive: true });
 
   res.status(200).json({
     success: true,
@@ -50,7 +50,7 @@ exports.getAllCategories = catchAsync(async (req, res, next) => {
    ========================================================== */
 exports.getCategoryById = catchAsync(async (req, res, next) => {
   const { id } = req.params;
-  const category = await Category.findById(id);
+  const category = await Category.findOne({ _id: id, isActive: true });
 
   if (!category) {
     return next(new AppError('Category not found', 404));

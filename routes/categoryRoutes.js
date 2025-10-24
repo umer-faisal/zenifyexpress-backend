@@ -4,6 +4,8 @@ const router = express.Router();
 const categoryController = require('../controllers/categoryController');
 const { protect, restrictTo } = require('../controllers/authController'); 
 
+
+
 /* ==========================================================
    📦 CATEGORY ROUTES
    ========================================================== */
@@ -16,5 +18,7 @@ router.get('/:id', categoryController.getCategoryById);
 router.post('/', protect, restrictTo('admin'), categoryController.createCategory);
 router.patch('/:id', protect, restrictTo('admin'), categoryController.updateCategory);
 router.patch('/:id/deactivate', protect, restrictTo('admin'), categoryController.deactivateCategory);
+
+
 
 module.exports = router;
