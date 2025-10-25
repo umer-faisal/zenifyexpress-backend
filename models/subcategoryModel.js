@@ -39,7 +39,7 @@ const subcategorySchema = new mongoose.Schema(
 subcategorySchema.pre(/^find/, function (next) {
   this.populate({
     path: 'category',
-    select: 'title icon',
+    select: 'title icon isActive',
   });
   next();
 });

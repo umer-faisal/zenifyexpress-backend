@@ -9,6 +9,9 @@ const AppError = require('../utils/appError');
 exports.createSubcategory = catchAsync(async (req, res, next) => {
   const { title, description, icon, category } = req.body;
 
+  if (!title || !category)
+    return next(new AppError('Title and category are required', 400));
+
   // Ensure the referenced category exists
   const existingCategory = await Category.findById(category);
   if (!existingCategory) {
@@ -16,7 +19,7 @@ exports.createSubcategory = catchAsync(async (req, res, next) => {
   }
 
   const newSubcategory = await Subcategory.create({
-    title,
+    title: title.toLowerCase(),
     description,
     icon,
     category,
@@ -60,7 +63,7 @@ exports.updateSubcategory = catchAsync(async (req, res, next) => {
 exports.deactivateSubcategory = catchAsync(async (req, res, next) => {
   const { id } = req.params;
 
-  const subcategory = await Subcategory.findById(id);
+  const subcategory = await Subcategory.findByIdAndUpdate(id);
   if (!subcategory) {
     return next(new AppError('Subcategory not found', 404));
   }
@@ -71,6 +74,7 @@ exports.deactivateSubcategory = catchAsync(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: 'Subcategory deactivated successfully',
+    data: subcategory,
   });
 });
 
