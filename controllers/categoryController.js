@@ -31,6 +31,42 @@ exports.createCategory = catchAsync(async (req, res, next) => {
 });
 
 
+
+
+/* ==========================================================
+   🧩 GET ALL CATEGORIES (Admin — includes inactive + pagination)
+   ========================================================== */
+exports.getAllCategoriesAdmin = catchAsync(async (req, res, next) => {
+
+  // Default values: page = 1, limit = 6
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 6;
+  const skip = (page - 1) * limit;
+
+  // Fetch categories with pagination
+  const categories = await Category.find()
+    .skip(skip)
+    .limit(limit)
+    .sort({ createdAt: -1 }); // newest first
+
+  // Count total documents for pagination metadata
+  const totalCategories = await Category.countDocuments();
+
+  if (!categories.length) {
+    return next(new AppError('No categories found', 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    results: categories.length,
+    totalRecords: totalCategories,
+    data: categories,
+  });
+});
+
+
+
+
 /* ==========================================================
    🧠 GET ALL CATEGORIES (Public)
    ========================================================== */

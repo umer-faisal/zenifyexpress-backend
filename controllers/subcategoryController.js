@@ -3,6 +3,8 @@ const Category = require('../models/categoryModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
+
+
 /* ==========================================================
    🟢 CREATE SUBCATEGORY  (Admin Only)
    ========================================================== */
@@ -25,12 +27,18 @@ exports.createSubcategory = catchAsync(async (req, res, next) => {
     category,
   });
 
+
+  // ✅ populate category details
+  await newSubcategory.populate('category', 'title');
+
+
   res.status(201).json({
     success: true,
     message: 'Subcategory created successfully',
     data: newSubcategory,
   });
 });
+
 
 
 /* ==========================================================
@@ -57,6 +65,7 @@ exports.updateSubcategory = catchAsync(async (req, res, next) => {
 });
 
 
+
 /* ==========================================================
    🔴 DEACTIVATE SUBCATEGORY (Soft Delete)
    ========================================================== */
@@ -79,6 +88,7 @@ exports.deactivateSubcategory = catchAsync(async (req, res, next) => {
 });
 
 
+
 /* ==========================================================
    🔍 GET ALL SUBCATEGORIES (Public)
    ========================================================== */
@@ -91,6 +101,7 @@ exports.deactivateSubcategory = catchAsync(async (req, res, next) => {
 //     data: subcategories,
 //   });
 // });
+
 
 
 /* ==========================================================
@@ -115,3 +126,40 @@ exports.getSubcategoriesByCategory = catchAsync(async (req, res, next) => {
   });
 });
 
+
+
+
+
+/* ==========================================================
+   🧠 GET ALL SUBCATEGORIES (Admin — includes inactive)
+   ========================================================== */
+exports.getAllSubcategoriesAdmin = catchAsync(async (req, res, next) => {
+  // Pagination setup — default 6 per page
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 6;
+  const skip = (page - 1) * limit;
+
+  // Fetch subcategories with pagination
+  const subcategories = await Subcategory.find()
+    .skip(skip)
+    .limit(limit)
+    .populate('category', 'title icon');
+
+  const total = await Subcategory.countDocuments();
+
+
+  // if (!categories.length) {
+  //     return next(new AppError('No categories found', 404));
+  //   }
+
+
+  res.status(200).json({
+    success: true,
+    message: 'All subcategories (including inactive) retrieved successfully',
+    total,
+    results: subcategories.length,
+    page,
+    totalPages: Math.ceil(total / limit),
+    data: subcategories,
+  });
+});

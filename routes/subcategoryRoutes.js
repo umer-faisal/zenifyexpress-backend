@@ -30,6 +30,18 @@ router.get('/category/:categoryId', subcategoryController.getSubcategoriesByCate
    🟢 ADMIN ROUTES (Protected)
    ========================================================== */
 
+   
+
+// 🧠 Get all subcategories (Admin only, includes inactive)      // ✅ NEW
+router.get(
+  '/admin',
+  authController.protect,
+  authController.restrictTo('admin'),
+  subcategoryController.getAllSubcategoriesAdmin
+);
+
+
+
 // Create Subcategory
 router.post(
   '/',
