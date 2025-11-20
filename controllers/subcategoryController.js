@@ -11,8 +11,8 @@ const AppError = require('../utils/appError');
 exports.createSubcategory = catchAsync(async (req, res, next) => {
   const { title, description, icon, category } = req.body;
 
-  if (!title || !category)
-    return next(new AppError('Title and category are required', 400));
+  if (!title || !category || !icon || !description)
+    return next(new AppError('All fields (title, description, icon, category) are required', 400));
 
   // Ensure the referenced category exists
   const existingCategory = await Category.findById(category);
@@ -158,8 +158,8 @@ exports.getAllSubcategoriesAdmin = catchAsync(async (req, res, next) => {
     message: 'All subcategories (including inactive) retrieved successfully',
     total,
     results: subcategories.length,
-    page,
-    totalPages: Math.ceil(total / limit),
+    // page,
+    // totalPages: Math.ceil(total / limit),
     data: subcategories,
   });
 });

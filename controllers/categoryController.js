@@ -8,8 +8,8 @@ const catchAsync = require('../utils/catchAsync');
 exports.createCategory = catchAsync(async (req, res, next) => {
   const { icon, title, description } = req.body;
 
-  if (!title) {
-    return next(new AppError('Category title is required', 400));
+  if (!title || !icon || !description) {
+    return next(new AppError('icon, title, and description are required fields', 400));
   }
 
   const existingCategory = await Category.findOne({ title: title.toLowerCase()});
